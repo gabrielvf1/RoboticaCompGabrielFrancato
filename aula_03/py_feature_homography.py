@@ -5,6 +5,9 @@ from matplotlib import pyplot as plt
 
 # Adaptado da documentacao em http://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_feature2d/py_feature_homography/py_feature_homography.html
 # Com a funcao drawMatches do usuario
+# cap = cv2.VideoCapture(0)
+# cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+# cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 
 def drawMatches(img1, kp1, img2, kp2, matches):
     """
@@ -34,9 +37,6 @@ def drawMatches(img1, kp1, img2, kp2, matches):
 
     # Create a new output image that concatenates the two images together
     # (a.k.a) a montage
-
-    print(img2)
-
 
     rows1 = img1.shape[0]
     cols1 = img1.shape[1]
@@ -78,8 +78,7 @@ def drawMatches(img1, kp1, img2, kp2, matches):
         cv2.line(out, (int(x1),int(y1)), (int(x2)+cols1,int(y2)), (255, 0, 0), 1)
 
 
-    # Show the image
-    cv2.imshow('Matched Features', out)
+    # Show the imageb
     cv2.waitKey(0)
     cv2.destroyWindow('Matched Features')
 
@@ -91,9 +90,6 @@ MIN_MATCH_COUNT = 10
 
 img1 = cv2.imread('madfox.jpg',0)         # Imagem a procurar
 img2 = cv2.imread('image.jpg',0) # Imagem do cenario - puxe do video para fazer isto
-
-
-print(img2)
 
 # Initiate SIFT detector
 sift = cv2.xfeatures2d.SIFT_create()
@@ -163,24 +159,20 @@ def auto_canny(image, sigma=0.33):
     # return the edged image
     return edged
 
-cap = cv2.VideoCapture(0)
-cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
-cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+# while(True):
+#     # Capture frame-by-frame
+#     print("New frame")
+#     ret, frame = cap.read()
 
-while(True):
-    # Capture frame-by-frame
-    print("New frame")
-    ret, frame = cap.read()
+#     # Convert the frame to grayscale
+#     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+#     # A gaussian blur to get rid of the noise in the image
+#     blur = cv2.GaussianBlur(gray,(5,5),0)
 
-    # Convert the frame to grayscale
-    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    # A gaussian blur to get rid of the noise in the image
-    blur = cv2.GaussianBlur(gray,(5,5),0)
-
-    bordas = auto_canny(blur)
-    bordas_color = cv2.cvtColor(bordas, cv2.COLOR_GRAY2BGR)
-    cv2.imshow('Detector de circulos',bordas_color)
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
-cap.release()
+#     bordas = auto_canny(blur)
+#     bordas_color = cv2.cvtColor(bordas, cv2.COLOR_GRAY2BGR)
+#     cv2.imshow('Detector de circulos',bordas_color)
+#     if cv2.waitKey(1) & 0xFF == ord('q'):
+#         break
+# cap.release()
 cv2.destroyAllWindows()
